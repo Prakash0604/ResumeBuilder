@@ -11,7 +11,7 @@
                                 <label for="" class="form-label">First Name</label>
                                 <input type="text" name="first_name" id=""
                                     class="form-control @error('first_name') is-invalid  @enderror"
-                                    placeholder="Enter your first name" aria-describedby="helpId" />
+                                    placeholder="Enter your first name" aria-describedby="helpId"  />
                                 @error('first_name')
                                     <small id="helpId" class="text-danger">{{ $message }}</small>
                                 @enderror

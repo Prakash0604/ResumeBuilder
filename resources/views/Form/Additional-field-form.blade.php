@@ -2,6 +2,7 @@
 @section('content')
     <div class="container others_container">
         <div class="card-group">
+            <form action="">
             <div class="card">
                 <div class="card-body">
 
@@ -25,9 +26,6 @@
                                     <label for="" class="form-label">Language</label>
                                     <input type="text" name="language[]" id="" class="form-control"
                                         placeholder="" aria-describedby="helpId" />
-                                    @error('language')
-                                        <small id="helpId" class="text-danger">{{ $message }}</small>
-                                    @enderror
                                 </div>
 
                                 <div class="col-md-6">
@@ -67,6 +65,30 @@
                         </div>
                     </div>
 
+                    {{-- Project Start --}}
+                    <strong>Projects(Optional)</strong>
+                    <div class="card p-2 mb-4 mt-4">
+                        <div class="card-body fetch_projects">
+                            <div class="project-section">
+                                    <div>
+                                        <label for="" class="form-label">Project Title</label>
+                                        <input type="text" name="project_title[]" id="" class="form-control"
+                                            placeholder="" aria-describedby="helpId" />
+                                    </div>
+
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Description</label>
+                                    <textarea class="form-control" name="project_description[]" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <button type="button" id="btnAddProject" class="btn btn-outline-primary col-2">Add</button>
+                        </div>
+                    </div>
+
+
+                    {{-- Project End --}}
                     {{-- Training --}}
                     <strong>Training</strong>
                     <div class="card p-2 mb-4 mt-4">
@@ -193,6 +215,7 @@
                     </div>
                 </div>
             </div>
+        </form>
         </div>
     </div>
 
@@ -206,16 +229,12 @@
             // For Language Start
             $("#addBtnLanguage").on("click", function() {
                 $(".lang_fetch").append(`
-        <div class="language-section border border-primary mt-2 mb-2 rounded p-2">
-               <div class="row p-2">
-                    <div class="col-md-6">
-                        <label for="" class="form-label">Language</label>
-                        <input type="text" name="language" id="" class="form-control" placeholder=""
-                            aria-describedby="helpId" />
-                        @error('language')
-                            <small id="helpId" class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                       <div class="language-section border border-primary mt-2 mb-2 rounded p-2">
+                             <div class="row p-2">
+                                 <div class="col-md-6">
+                                   <label for="" class="form-label">Language</label>
+                                     <input type="text" name="language" id="" class="form-control" placeholder="" aria-describedby="helpId" />
+                                </div>
 
                     <div class="col-md-6">
                         <label for="" class="form-label">Reading</label>
@@ -258,6 +277,34 @@
                 $(this).closest('.language-section').remove();
             });
             // For Language End
+
+            // Form Projects Start
+            $("#btnAddProject").click(function(){
+                $(".fetch_projects").append(`
+                <div class="project-section border border-primary rounded mt-2 mb-2 p-2">
+                                    <div>
+                                        <label for="" class="form-label">Project Title</label>
+                                        <input type="text" name="project_title[]" id="" class="form-control"
+                                            placeholder="" aria-describedby="helpId" />
+                                    </div>
+
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Description</label>
+                                    <textarea class="form-control" name="project_description[]" rows="3"></textarea>
+                                </div>
+                                  <div class="col-md-12 mt-3 mb-3">
+                           <button type="button" class="btn btn-outline-danger col-2 btnRemoveProject">Remove</button>
+                        </div>
+                            </div>
+                `);
+            })
+
+            $(document).on("click",".btnRemoveProject",function(){
+                $(this).closest('.project-section').remove();
+            })
+            // Form Projects End
+
+
 
             // For Training Start
             $("#btnAddTraining").on("click", function() {

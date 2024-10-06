@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,3 +32,9 @@ Route::get('/experience',function(){
 Route::get('/others',function(){
     return view('Form/Additional-field-form');
 });
+
+
+Route::get('/admin/register',[SuperAdminController::class,'index'])->name('admin.register');
+Route::post('/admin/register',[SuperAdminController::class,'store']);
+Route::get('/admin/login',[SuperAdminController::class,'login'])->name('admin.login');
+Route::post('/admin/login',[SuperAdminController::class,'storeLogin']);
