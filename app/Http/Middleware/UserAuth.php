@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminAuth
+class UserAuth
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(session()->has('email') && Auth::user()->position=='admin')
+        if(session()->has('email') && Auth::user()->position=='user')
         return $next($request);
     else
     return redirect()->route('admin.login')->with(['message'=>'Please Login First']);
