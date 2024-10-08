@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class IndustryRequest extends FormRequest
+class JobLevelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,14 @@ class IndustryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'industry_names.*'=>'required|unique:industries,industry_name',
+            'job_level_names.*'=>'required|unique:job_levels,job_level_name',
         ];
     }
 
-
     public function messages(){
         return [
-                'industry_names.*.required'=>'Please the industry name',
-                'industry_names.*.unique'=>'Name has already been taken'
+                'job_level_names.*.required'=>'Please enter the Job Level name',
+                'job_level_names.*.unique'=>'Name has already been taken'
             ];
     }
 }

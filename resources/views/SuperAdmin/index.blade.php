@@ -68,6 +68,27 @@
                      <li class="active">
                         <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i> Industry</a>
                     </li>
+                     <li class="active">
+                        <a href="{{ route('admin.job_level') }}"><i class="bi bi-people-fill"></i> Job Level</a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i> Degree</a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Field of Study</a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Grading Type</a>
+                    </li>
+                     <li class="active">
+                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Skill</a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Grading</a>
+                    </li>
+                     <li class="active">
+                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Year</a>
+                    </li>
                     <li>
                         <a href=""><i class="bi bi-person-circle"></i> Profile</a>
                     </li>

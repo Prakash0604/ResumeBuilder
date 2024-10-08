@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\IndustryController;
+use App\Http\Controllers\JobLevelController;
 use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,9 +45,23 @@ Route::get('/others',function(){
 
 Route::middleware('adminAuth')->group(function(){
     Route::prefix('admin')->group(function(){
+
         Route::get('user',[AdminUserController::class,'index'])->name('admin.users');
+
+        // Industry
         Route::get('industry',[IndustryController::class,'index'])->name('admin.industry');
         Route::post('industry/store',[IndustryController::class,'storeIndustry']);
+        Route::get('industry/delete/{id}',[IndustryController::class,'deleteIndustry']);
+        Route::get('industry/get/{id}',[IndustryController::class,'getIndustry']);
+        Route::post('industry/edit/{id}',[IndustryController::class,'updateIndustry']);
+
+
+        // Job Level
+        Route::get('job-level',[JobLevelController::class,'index'])->name('admin.job_level');
+        Route::post('job-level/store',[JobLevelController::class,'storeJobLevel']);
+        Route::get('job-level/delete/{id}',[JobLevelController::class,'deleteJobLevel']);
+        Route::get('job-level/get/{id}',[JobLevelController::class,'getJobLevel']);
+        Route::post('job-level/edit/{id}',[JobLevelController::class,'updateJobLevel']);
         Route::get('logout',[AdminUserController::class,'adminLogout'])->name('admin.logout');
     });
 });
