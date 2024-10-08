@@ -1,45 +1,42 @@
 @extends('SuperAdmin.index')
 @section('content')
     <div class="container">
-        <h1 class="text-center">Industry</h1>
+        <h1 class="text-center">Degree</h1>
+        <button type="button" class="btn btn-primary float-end mt-2 mb-2" data-bs-toggle="modal" data-bs-target="#modalId">
+            Add Degree
+        </button>
         <div class="table-responsive">
-            <button type="button" class="btn btn-primary mt-2 mb-2" data-bs-toggle="modal" data-bs-target="#modalId">
-                Add Industries
-            </button>
-
-            <table class="table table-bordered table-hover" id="display-industry">
+            <table class="table table-bordered table-hover" id="fetch-degree">
                 <thead>
                     <tr>
                         <th scope="col">S.N</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Descrirption</th>
+                        <th scope="col">Degree Name</th>
+                        <th scope="col">Description</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                </tbody>
             </table>
         </div>
     </div>
 
-    {{-- Add Modal --}}
-    <!-- Modal -->
+    <!-- Add Modal -->
     <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <form id="addIndustries">
+                <form id="addDegrees">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalTitleId">
-                            Add Industries
+                            Add Degree
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="table-responsive">
-                                <button type="button" class="btn btn-primary mt-2 mb-2" id="addMoreIndustry">Add
-                                    More</button>
                                 <table class="table table-bordered table-hover">
+                                    <button type="button" class="btn btn-primary float-end mt-2 mb-2"
+                                        id="addMoreDegree">Add More</button>
                                     <thead>
                                         <tr>
                                             <th scope="col">Name</th>
@@ -47,20 +44,14 @@
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="fetchInputData">
+                                    <tbody class="renderDegree">
+                                        @csrf
                                         <tr class="">
-                                            <td scope="row">
-                                                @csrf
-                                                <input type="text" name="industry_names[]" id=""
-                                                    class="form-control" placeholder="" aria-describedby="helpId" />
-                                            </td>
-                                            <td>
-                                                <input type="text" name="description[]" id=""
-                                                    class="form-control" placeholder="" aria-describedby="helpId" />
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger">Remove</button>
-                                            </td>
+                                            <td scope="row"> <input type="text" name="degree_names[]"
+                                                    class="form-control" id=""> </td>
+                                            <td> <input type="text" name="descriptions[]" class="form-control"
+                                                    id=""></td>
+                                            <td><button type="button" class="btn btn-danger">Remove</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -78,15 +69,16 @@
             </div>
         </div>
     </div>
+    <!-- Add Modal -->
 
-    {{-- Edit Industries --}}
+    {{-- Edit Modal --}}
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <form id="editIndustries">
+                <form id="updateDegrees">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalTitleId">
-                            Edit Industries
+                            Edit Degree
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -101,17 +93,13 @@
                                             <th scope="col">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="fetchInputData">
+                                    <tbody class="renderDegree">
+                                        @csrf
                                         <tr class="">
-                                            <td scope="row">
-                                                @csrf
-                                                <input type="text" name="industry_name" id="industry_name"
-                                                    class="form-control" placeholder="" aria-describedby="helpId" />
-                                            </td>
-                                            <td>
-                                                <input type="text" name="description" id="description"
-                                                    class="form-control" placeholder="" aria-describedby="helpId" />
-                                            </td>
+                                            <td scope="row"> <input type="text" name="degree_name"
+                                                    class="form-control" id="degree_name"> </td>
+                                            <td> <input type="text" name="description" class="form-control"
+                                                    id="description"></td>
                                             <td>
                                                 <select class="form-select" name="status" id="status">
                                                     <option value="1">Active</option>
@@ -129,87 +117,113 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn btn-success btnUpdate" id="btnUpdate">Update</button>
+                        <button type="submit" class="btn btn-primary btnUpdate" id="btnUpdate">Update</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    {{-- Edit Industries --}}
+    {{-- Edit Modal --}}
 
-    {{-- Delete Industries --}}
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+    {{-- Delete Modal --}}
+    <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form id="addIndustries">
+                <form id="addDegrees">
                     <div class="modal-header bg-secondary text-white">
-                        <h5 class="modal-title" id="modalTitleId">
-                            Delete Industries
-                        </h5>
+                        <h6 class="modal-title" id="modalTitleId">
+                            Delete Degree
+                        </h6>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
-                            <h6 class="text-danger">Are you sure you want to delete ?</h6>
+                            <h5 class="text-danger">Are you sure you want to delete ?</h5>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="button" class="btn btn-danger btnDelete" id="btnDelete">Confirm Delete</button>
+                        <button type="submit" class="btn btn-danger btnDelete" id="btnDelete">Confirm Delete</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    {{-- Delete Industries --}}
-
+    {{-- Delete Modal --}}
     <script>
         $(document).ready(function() {
 
-            // Industry Input fied add
-            $("#addMoreIndustry").on("click", function() {
-                $("#fetchInputData").append(`
-                    <tr class="">
-                     <td scope="row">
-                        <input type="text" name="industry_names[]"  id=""  class="form-control" placeholder="" />
-                        </td>
-                        <td>
-                            <input  type="text"  name="description[]"  id=""  class="form-control"  placeholder="" />
-                         </td>
-                            <td>
-                                <button type="button" class="btn btn-danger btnRemove">Remove</button>
-                            </td>
-                    </tr>
-                `);
+            // Fetch Data
+            $("#fetch-degree").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.degree') }}",
+                columns: [{
+                        data: "DT_RowIndex",
+                        name: "DT_RowIndex"
+                    },
+                    {
+                        data: "degree_name",
+                        name: "degree_name"
+                    },
+                    {
+                        data: "description",
+                        name: "description"
+                    }, {
+                        data: "status",
+                        name: "status",
+                        render: function($row) {
+                            if ($row == 1) {
+                                return '<span class="badge badge-success">Active</span>';
+                            } else {
+                                return '<span class="badge badge-danger">Inactive</span>'
+                            }
+                        }
+                    }, {
+                        data: "action",
+                        name: "action",
+                        searchable: false,
+                        orderable: false
+                    }
+                ]
             })
+            // Fetch Data
 
-            $(document).on("click", ".btnRemove", function() {
+            $("#addMoreDegree").on("click", function() {
+                let data = `<tr class="">
+                    <td scope="row"> <input type="text" name="degree_names[]" class="form-control" id=""> </td>
+                    <td> <input type="text" name="descriptions[]" class="form-control" id=""></td>
+                    <td><button type="button" class="btn btn-danger removeBtn">Remove</button></td>
+                    </tr>`;
+                $(".renderDegree").append(data);
+            });
+
+            $(document).on("click", ".removeBtn", function() {
                 $(this).closest("tr").remove();
-            })
-            // Industry Input fied add
+            });
 
-            $("#addIndustries").submit(function(event) {
+            // Add Degree
+            $("#addDegrees").submit(function(event) {
                 event.preventDefault();
                 $("#btnSave").text("Saving...");
                 $("#btnSave").prop("disabled", true);
                 var formdata = new FormData(this);
-                console.log(formdata);
                 $.ajax({
-                    method: "POST",
-                    url: "/admin/industry/store",
+                    method: "post",
+                    url: "/admin/degree/store",
                     data: formdata,
-                    contentType: false,
                     processData: false,
+                    contentType: false,
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
                         if (response.success == true) {
                             Swal.fire({
                                 icon: "success",
                                 title: "Success",
-                                text: "Industry has been created",
+                                text: "Degree Created Successfully",
                                 showConfirmButton: false,
                                 timer: 1500
                             });
@@ -217,112 +231,34 @@
                                 location.reload();
                             }, 1500);
                         }
-                    },
-                    error: function(response) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Someting went wrong",
-                            text: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                        $("#btnSave").prop("disabled", false);
-                        $("#btnSave").text("Save");
                     }
                 })
             });
 
-            $("#display-industry").DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('admin.industry') }}",
-                columns: [{
-                    data: "DT_RowIndex",
-                    name: "DT_RowIndex"
-                }, {
-                    data: "industry_name",
-                    name: "industry_name"
-                }, {
-                    data: "description",
-                    name: "description"
-                }, {
-                    data: "status",
-                    name: "status",
-                    render: function(data) {
-                        if (data == 1) {
-                            return `<span class="badge badge-success">Active</span>`;
-                        } else {
-                            return `<span class="badge badge-danger">Inactive</span>`
-                        }
-                    }
-                }, {
-                    data: "action",
-                    name: "action"
-                }, ]
-            });
-
-            $(document).on("click", '.deleteIndustry', function() {
-                let id = $(this).attr("data-id");
-                console.log(id);
-                $(document).on("click", '.btnDelete', function(event) {
-                    event.preventDefault();
-                    $(".btnDelete").text("Deleting....");
-                    $(".btnDelete").prop("disabled", true);
-                    $.ajax({
-                        url: "/admin/industry/delete/" + id,
-                        method: "get",
-                        success: function(response) {
-                            console.log(response);
-                            if (response.success == true) {
-                                Swal.fire({
-                                    icon: "success",
-                                    title: "Success",
-                                    text: "Industry deleted Successfully",
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 1500);
-                            } else {
-                                Swal.fire({
-                                    icon: "error",
-                                    title: "Something went wrong",
-                                    text: response.message,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                                $(".btnDelete").text("Confirm Delete");
-                                $(".btnDelete").prop("disabled", false);
-                            }
-                        }
-                    })
-                })
-            });
-
-            $(document).on("click", '.editIndustry', function() {
-                let id = $(this).attr("data-id");
+            $(document).on("click",'.editDegree',function(){
+                let id=$(this).attr("data-id");
                 console.log(id);
                 $.ajax({
-                    method: "get",
-                    url: "/admin/industry/get/" + id,
-                    success: function(response) {
+                    method:"get",
+                    url:"/admin/degree/get/"+id,
+                    success:function(response){
                         console.log(response);
-                        $("#industry_name").val(response.message.industry_name);
-                        $("#description").val(response.message.description);
-                        $("#status").val(response.message.status);
+                        if(response.success==true){
+                            $("#degree_name").val(response.message.degree_name);
+                            $("#description").val(response.message.description);
+                            $("#status").val(response.message.status);
+                        }
                     }
-                })
-
-                // Update
-                $("#editIndustries").submit(function(event) {
+                });
+                  // Update
+                  $("#updateDegrees").submit(function(event) {
                     event.preventDefault();
                     $(".btnUpdate").text("Updating....");
                     $(".btnUpdate").prop("disabled", true);
                     let formdata = new FormData(this);
                     $.ajax({
                         method: "post",
-                        url: "/admin/industry/edit/" + id,
+                        url: "/admin/degree/edit/" + id,
                         data: formdata,
                         processData:false,
                         contentType:false,
@@ -331,7 +267,7 @@
                                 Swal.fire({
                                     icon: "success",
                                     title: "Success",
-                                    text: "Industry Updated Successfully",
+                                    text: "Degree Updated Successfully",
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
@@ -354,8 +290,51 @@
                     })
 
                 })
+
+
             });
+
+
+            $(document).on("click", '.deleteDegree', function() {
+                let id = $(this).attr("data-id");
+                console.log(id);
+                $(document).on("click", '.btnDelete', function(event) {
+                    event.preventDefault();
+                    $(".btnDelete").text("Deleting....");
+                    $(".btnDelete").prop("disabled", true);
+                    $.ajax({
+                        url: "/admin/degree/delete/" + id,
+                        method: "get",
+                        success: function(response) {
+                            console.log(response);
+                            if (response.success == true) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Success",
+                                    text: "Degree deleted Successfully",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1500);
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Something went wrong",
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                $(".btnDelete").text("Confirm Delete");
+                                $(".btnDelete").prop("disabled", false);
+                            }
+                        }
+                    })
+                })
+            });
+
+
         })
     </script>
-    {{-- Add Modal --}}
 @endsection

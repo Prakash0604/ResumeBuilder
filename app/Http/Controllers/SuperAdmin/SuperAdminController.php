@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\SuperAdmin;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\SuperAdminRequest;
 use App\Services\SuperAdminService;
 use Illuminate\Http\Request;

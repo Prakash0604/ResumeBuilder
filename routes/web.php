@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdminUserController;
-use App\Http\Controllers\IndustryController;
-use App\Http\Controllers\JobLevelController;
-use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\SuperAdmin\AdminUserController;
+use App\Http\Controllers\SuperAdmin\IndustryController;
+use App\Http\Controllers\SuperAdmin\JobLevelController;
+use App\Http\Controllers\SuperAdmin\DegreeController;
+use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,6 +63,18 @@ Route::middleware('adminAuth')->group(function(){
         Route::get('job-level/delete/{id}',[JobLevelController::class,'deleteJobLevel']);
         Route::get('job-level/get/{id}',[JobLevelController::class,'getJobLevel']);
         Route::post('job-level/edit/{id}',[JobLevelController::class,'updateJobLevel']);
+
+        // Degree
+        Route::get('degree',[DegreeController::class,'index'])->name('admin.degree');
+        Route::post('degree/store',[DegreeController::class,'storeDegree']);
+        Route::get('degree/delete/{id}',[DegreeController::class,'deleteDegree']);
+        Route::get('degree/get/{id}',[DegreeController::class,'getDegree']);
+        Route::post('degree/edit/{id}',[DegreeController::class,'updateDegree']);
+
+
+
+
+
         Route::get('logout',[AdminUserController::class,'adminLogout'])->name('admin.logout');
     });
 });

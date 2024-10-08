@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use App\Http\Requests\JobLevelRequest;
-use App\Models\JobLevel;
+namespace App\Http\Controllers\SuperAdmin;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\IndustryRequest;
+use App\Models\Industry;
+use App\Services\IndustryService;
 use Illuminate\Http\Request;
-use App\Services\JobLevelService;
 use Yajra\DataTables\Facades\DataTables;
 
-class JobLevelController extends Controller
+class IndustryController extends Controller
 {
     protected $model,$data;
 
-    public function __construct(JobLevelService $jobLevelService,JobLevel $jobLevel){
-        $this->model=$jobLevelService;
-        $this->data=$jobLevel;
+    public function __construct(IndustryService $industryService,Industry $industry){
+        $this->model=$industryService;
+        $this->data=$industry;
     }
     public function index(Request $request){
         if($request->ajax()){
@@ -22,23 +22,23 @@ class JobLevelController extends Controller
            return DataTables::of($data)
            ->addIndexColumn()
            ->addColumn('action',function($row){
-            $btn='<a class="btn btn-warning editJobLevel" data-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>';
-            $btn .='<a  class="btn btn-danger deleteJobLevel ml-2" data-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>';
+            $btn='<a class="btn btn-warning editIndustry" data-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>';
+            $btn .='<a  class="btn btn-danger deleteIndustry ml-2" data-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>';
             return $btn;
            })
            ->rawColumns(['action'])
            ->make(true);
         }
-        return view('SuperAdmin.Page.JobLevel');
+        return view('SuperAdmin.Page.Industry');
     }
 
-    public function storeJobLevel(JobLevelRequest $request){
+    public function storeIndustry(IndustryRequest $request){
         try{
             // dd($request->all());
             // $this->model->store($request->all());
-            foreach($request->job_level_names as $index=>$job){
-                JobLevel::create([
-                    'job_level_name'=>$job,
+            foreach($request->industry_names as $index=>$industry){
+                Industry::create([
+                    'industry_name'=>$industry,
                     'description'=>$request->description[$index]
                 ]);
             }
@@ -48,7 +48,7 @@ class JobLevelController extends Controller
         }
     }
 
-    public function getJobLevel($id){
+    public function getIndustry($id){
         try{
             $data= $this->data->find($id);
             return response()->json(['success'=>true,'message'=>$data]);
@@ -57,7 +57,7 @@ class JobLevelController extends Controller
         }
     }
 
-    public function updateJobLevel(JobLevelRequest $request,$id){
+    public function updateIndustry(IndustryRequest $request,$id){
         try{
             $this->model->update($request->all(),$id);
             return response()->json(['success'=>true]);
@@ -65,7 +65,7 @@ class JobLevelController extends Controller
             return response()->json(['success'=>false,'message'=>$e->getMessage()]);
         }
     }
-    public function deleteJobLevel($id){
+    public function deleteIndustry($id){
         try{
             $this->model->delete($id);
             return response()->json(['success'=>true]);
