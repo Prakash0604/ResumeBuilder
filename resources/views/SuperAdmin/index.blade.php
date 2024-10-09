@@ -72,10 +72,10 @@
                         <a href="{{ route('admin.job_level') }}"><i class="bi bi-people-fill"></i> Job Level</a>
                     </li>
                     <li class="active">
-                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i> Degree</a>
+                        <a href="{{ route('admin.degree') }}"><i class="bi bi-people-fill"></i> Degree</a>
                     </li>
                     <li class="active">
-                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Field of Study</a>
+                        <a href="{{ route('admin.field') }}"><i class="bi bi-people-fill"></i>Field of Study</a>
                     </li>
                     <li class="active">
                         <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Grading Type</a>

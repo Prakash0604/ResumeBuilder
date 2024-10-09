@@ -4,6 +4,7 @@ use App\Http\Controllers\SuperAdmin\AdminUserController;
 use App\Http\Controllers\SuperAdmin\IndustryController;
 use App\Http\Controllers\SuperAdmin\JobLevelController;
 use App\Http\Controllers\SuperAdmin\DegreeController;
+use App\Http\Controllers\SuperAdmin\FieldController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +71,14 @@ Route::middleware('adminAuth')->group(function(){
         Route::get('degree/delete/{id}',[DegreeController::class,'deleteDegree']);
         Route::get('degree/get/{id}',[DegreeController::class,'getDegree']);
         Route::post('degree/edit/{id}',[DegreeController::class,'updateDegree']);
+
+        // Field Of Study
+        Route::get('field',[FieldController::class,'index'])->name('admin.field');
+        Route::post('field/store',[FieldController::class,'storeField']);
+        Route::get('field/delete/{id}',[FieldController::class,'deleteField']);
+        Route::get('field/get/{id}',[FieldController::class,'getField']);
+        Route::post('field/edit/{id}',[FieldController::class,'updateField']);
+
 
 
 
