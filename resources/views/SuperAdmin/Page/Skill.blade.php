@@ -157,7 +157,7 @@
     {{-- Delete Modal --}}
     <script>
         $(document).ready(function() {
-            $("#fetch-skills").DataTable({
+            var table=$("#fetch-skills").DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('admin.skill') }}",
@@ -221,9 +221,9 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1500);
+                            $('#addSkills').trigger("reset"); // Clear form inputs
+                            $('#modalId').modal('hide'); // Close the modal
+                            table.draw();
                         }
                     },
                     error: function(xhr) {
@@ -298,39 +298,39 @@
                 });
             });
 
-            $(document).on("click",".deleteSkill",function(){
-                let id=$(this).attr("data-id");
-                $("#deleteSkills").submit(function(event){
+            $(document).on("click", ".deleteSkill", function() {
+                let id = $(this).attr("data-id");
+                $("#deleteSkills").submit(function(event) {
                     event.preventDefault();
                     $("#btnDelete").text("Deleting...");
-                    $("#btnDelete").prop("disabled",true);
+                    $("#btnDelete").prop("disabled", true);
                     $.ajax({
-                        method:"get",
-                        url:"/admin/skill/delete/"+id,
-                        success:function(response){
+                        method: "get",
+                        url: "/admin/skill/delete/" + id,
+                        success: function(response) {
                             console.log(response);
-                            if(response.success==true){
+                            if (response.success == true) {
                                 Swal.fire({
-                                    icon:"success",
-                                    title:"Success",
-                                    text:"Skill Deleted Successfully",
-                                    showConfirmButton:false,
-                                    timer:1500
+                                    icon: "success",
+                                    title: "Success",
+                                    text: "Skill Deleted Successfully",
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 });
-                                setTimeout(()=>{
-                                    location.reload();
-                                },1500)
+                               $("#deleteModal").modal("hide");
+                               $("#deleteSkills").trigger("reset");
+                               table.draw();
                             }
                         },
-                        error:function(xhr){
+                        error: function(xhr) {
                             console.log(xhr);
                             Swal.fire({
-                                    icon:"warning",
-                                    title:"Something went wrong",
-                                    text:xhr,
-                                    showConfirmButton:false,
-                                    timer:1500
-                                });
+                                icon: "warning",
+                                title: "Something went wrong",
+                                text: xhr,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                         }
                     })
                 })
