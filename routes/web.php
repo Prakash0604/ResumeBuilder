@@ -5,6 +5,7 @@ use App\Http\Controllers\SuperAdmin\IndustryController;
 use App\Http\Controllers\SuperAdmin\JobLevelController;
 use App\Http\Controllers\SuperAdmin\DegreeController;
 use App\Http\Controllers\SuperAdmin\FieldController;
+use App\Http\Controllers\SuperAdmin\GradingTypeController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,31 +54,39 @@ Route::middleware('adminAuth')->group(function(){
         // Industry
         Route::get('industry',[IndustryController::class,'index'])->name('admin.industry');
         Route::post('industry/store',[IndustryController::class,'storeIndustry']);
-        Route::get('industry/delete/{id}',[IndustryController::class,'deleteIndustry']);
         Route::get('industry/get/{id}',[IndustryController::class,'getIndustry']);
         Route::post('industry/edit/{id}',[IndustryController::class,'updateIndustry']);
+        Route::get('industry/delete/{id}',[IndustryController::class,'deleteIndustry']);
 
 
         // Job Level
         Route::get('job-level',[JobLevelController::class,'index'])->name('admin.job_level');
         Route::post('job-level/store',[JobLevelController::class,'storeJobLevel']);
-        Route::get('job-level/delete/{id}',[JobLevelController::class,'deleteJobLevel']);
         Route::get('job-level/get/{id}',[JobLevelController::class,'getJobLevel']);
         Route::post('job-level/edit/{id}',[JobLevelController::class,'updateJobLevel']);
+        Route::get('job-level/delete/{id}',[JobLevelController::class,'deleteJobLevel']);
 
         // Degree
         Route::get('degree',[DegreeController::class,'index'])->name('admin.degree');
         Route::post('degree/store',[DegreeController::class,'storeDegree']);
-        Route::get('degree/delete/{id}',[DegreeController::class,'deleteDegree']);
         Route::get('degree/get/{id}',[DegreeController::class,'getDegree']);
         Route::post('degree/edit/{id}',[DegreeController::class,'updateDegree']);
+        Route::get('degree/delete/{id}',[DegreeController::class,'deleteDegree']);
 
         // Field Of Study
         Route::get('field',[FieldController::class,'index'])->name('admin.field');
         Route::post('field/store',[FieldController::class,'storeField']);
-        Route::get('field/delete/{id}',[FieldController::class,'deleteField']);
         Route::get('field/get/{id}',[FieldController::class,'getField']);
         Route::post('field/edit/{id}',[FieldController::class,'updateField']);
+        Route::get('field/delete/{id}',[FieldController::class,'deleteField']);
+
+        // Grading Type
+        Route::get('grading-type',[GradingTypeController::class,'index'])->name('admin.grading-type');
+        Route::post('grading-type/store',[GradingTypeController::class,'storeGradingType']);
+        Route::get('grading-type/get/{id}',[GradingTypeController::class,'getGradingType']);
+        Route::post('grading-type/edit/{id}',[GradingTypeController::class,'updateGradingType']);
+        Route::get('grading-type/delete/{id}',[GradingTypeController::class,'deleteGradingType']);
+
 
 
 

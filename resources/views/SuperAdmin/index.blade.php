@@ -78,7 +78,7 @@
                         <a href="{{ route('admin.field') }}"><i class="bi bi-people-fill"></i>Field of Study</a>
                     </li>
                     <li class="active">
-                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Grading Type</a>
+                        <a href="{{ route('admin.grading-type') }}"><i class="bi bi-people-fill"></i>Grading Type</a>
                     </li>
                      <li class="active">
                         <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Skill</a>
