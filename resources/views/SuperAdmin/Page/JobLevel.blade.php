@@ -1,7 +1,7 @@
 @extends('SuperAdmin.index')
 @section('content')
     <div class="container">
-        <h1 class="text-center">Job Level</h1>
+        <h1 class="text-center">{{ $title }}</h1>
         <div class="table-responsive">
             <button type="button" class="btn btn-primary mt-2 mb-2" data-bs-toggle="modal" data-bs-target="#modalId">
                 Add Job Level

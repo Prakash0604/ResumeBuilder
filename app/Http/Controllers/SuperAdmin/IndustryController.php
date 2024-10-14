@@ -17,6 +17,7 @@ class IndustryController extends Controller
         $this->data=$industry;
     }
     public function index(Request $request){
+        $title="Industry";
         if($request->ajax()){
            $data= $this->data->all();
            return DataTables::of($data)
@@ -29,7 +30,7 @@ class IndustryController extends Controller
            ->rawColumns(['action'])
            ->make(true);
         }
-        return view('SuperAdmin.Page.Industry');
+        return view('SuperAdmin.Page.Industry',compact('title'));
     }
 
     public function storeIndustry(IndustryRequest $request){

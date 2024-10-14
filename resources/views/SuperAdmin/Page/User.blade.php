@@ -1,7 +1,7 @@
 @extends('SuperAdmin.index')
 @section('content')
     <div class="container">
-        <h1 class="text-center">User List</h1>
+        <h1 class="text-center">{{ $title }}</h1>
         <div class="table-responsive">
             <table class="table table-bordered table-hover display" id="itemsTable">
                 <thead>

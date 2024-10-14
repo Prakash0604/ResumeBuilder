@@ -19,6 +19,7 @@ class GradingTypeController extends Controller
     }
 
     public function index(Request $request){
+        $title="Grading Types";
         if($request->ajax()){
             $grading=$this->data->all();
             return DataTables::of($grading)
@@ -31,7 +32,7 @@ class GradingTypeController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('SuperAdmin.Page.GradingType');
+        return view('SuperAdmin.Page.GradingType',compact('title'));
     }
 
     public function storeGradingType(GradingTypeRequest $request){

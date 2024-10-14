@@ -1,7 +1,7 @@
 @extends('SuperAdmin.index')
 @section('content')
     <div class="container">
-        <h1 class="text-center">Grading Type</h1>
+        <h1 class="text-center">{{ $title }}</h1>
         <div class="table-responsive">
             <button class="btn btn-outline-primary mt-2 mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modalId">Add
                 Grading Type</button>

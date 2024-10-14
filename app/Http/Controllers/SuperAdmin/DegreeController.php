@@ -20,6 +20,7 @@ class DegreeController extends Controller
     }
     public function index(Request $request)
     {
+        $title="Degree";
         if ($request->ajax()) {
             $data = $this->data->all();
             return DataTables::of($data)
@@ -32,7 +33,7 @@ class DegreeController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('SuperAdmin.Page.Degree');
+        return view('SuperAdmin.Page.Degree',compact('title'));
     }
 
     public function storeDegree(DegreeRequest $request)

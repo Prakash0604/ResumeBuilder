@@ -17,6 +17,7 @@ class JobLevelController extends Controller
         $this->data=$jobLevel;
     }
     public function index(Request $request){
+        $title="Job Level";
         if($request->ajax()){
            $data= $this->data->all();
            return DataTables::of($data)
@@ -29,7 +30,7 @@ class JobLevelController extends Controller
            ->rawColumns(['action'])
            ->make(true);
         }
-        return view('SuperAdmin.Page.JobLevel');
+        return view('SuperAdmin.Page.JobLevel',compact('title'));
     }
 
     public function storeJobLevel(JobLevelRequest $request){

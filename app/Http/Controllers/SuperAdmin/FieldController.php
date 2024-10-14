@@ -17,6 +17,7 @@ class FieldController extends Controller
         $this->modal=$fieldService;
     }
     public function index(Request $request){
+        $title="Field of Study";
       if($request->ajax()){
         $field=$this->data->all();
         return DataTables::of($field)
@@ -29,7 +30,7 @@ class FieldController extends Controller
         ->rawColumns(['action'])
         ->make(true);
       }
-        return view('SuperAdmin.Page.FieldofStudy');
+        return view('SuperAdmin.Page.FieldofStudy',compact('title'));
     }
 
     public function storeField(FieldStudyRequest $request){

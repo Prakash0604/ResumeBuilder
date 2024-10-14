@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 class AdminUserController extends Controller
 {
     public function index(Request $request){
+        $title="Users";
         if($request->ajax()){
             $users=User::all();
             // except(['position','admin'])->get()
@@ -23,6 +24,6 @@ class AdminUserController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('SuperAdmin.Page.User', );
+        return view('SuperAdmin.Page.User',compact('title') );
     }
 }

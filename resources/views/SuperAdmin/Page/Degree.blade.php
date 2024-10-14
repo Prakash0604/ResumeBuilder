@@ -1,7 +1,7 @@
 @extends('SuperAdmin.index')
 @section('content')
     <div class="container">
-        <h1 class="text-center">Degree</h1>
+        <h1 class="text-center">{{ $title }}</h1>
         <button type="button" class="btn btn-primary float-end mt-2 mb-2" data-bs-toggle="modal" data-bs-target="#modalId">
             Add Degree
         </button>

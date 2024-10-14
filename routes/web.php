@@ -6,6 +6,7 @@ use App\Http\Controllers\SuperAdmin\JobLevelController;
 use App\Http\Controllers\SuperAdmin\DegreeController;
 use App\Http\Controllers\SuperAdmin\FieldController;
 use App\Http\Controllers\SuperAdmin\GradingTypeController;
+use App\Http\Controllers\SuperAdmin\SkillController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -86,6 +87,14 @@ Route::middleware('adminAuth')->group(function(){
         Route::get('grading-type/get/{id}',[GradingTypeController::class,'getGradingType']);
         Route::post('grading-type/edit/{id}',[GradingTypeController::class,'updateGradingType']);
         Route::get('grading-type/delete/{id}',[GradingTypeController::class,'deleteGradingType']);
+
+
+        // Skills
+        Route::get('skill',[SkillController::class,'index'])->name('admin.skill');
+        Route::post('skill/store',[SkillController::class,'storeSkill']);
+        Route::get('skill/get/{id}',[SkillController::class,'getSkill']);
+        Route::post('skill/edit/{id}',[SkillController::class,'updateSkill']);
+        Route::get('skill/delete/{id}',[SkillController::class,'deleteSkill']);
 
 
 
