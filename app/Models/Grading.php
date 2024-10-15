@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Grading extends Model
 {
     use HasFactory;
+    protected $fillable=['grading_name','description','status'];
 }

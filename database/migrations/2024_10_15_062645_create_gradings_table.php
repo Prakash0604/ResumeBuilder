@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('gradings', function (Blueprint $table) {
             $table->id();
+            $table->string('grading_name')->unique();
+            $table->longText('description')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
