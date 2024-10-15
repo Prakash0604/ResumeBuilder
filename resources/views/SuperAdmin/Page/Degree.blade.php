@@ -157,7 +157,7 @@
         $(document).ready(function() {
 
             // Fetch Data
-            $("#fetch-degree").DataTable({
+            var table = $("#fetch-degree").DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('admin.degree') }}",
@@ -228,30 +228,34 @@
                                 timer: 1500
                             });
                             setTimeout(() => {
-                                location.reload();
+                                $("#modalId").modal("hide");
+                                $("#addDegrees").trigger("reset");
+                                table.draw();
                             }, 1500);
+                            $("#btnSave").text("Save");
+                            $("#btnSave").prop("disabled", false);
                         }
                     }
                 })
             });
 
-            $(document).on("click",'.editDegree',function(){
-                let id=$(this).attr("data-id");
+            $(document).on("click", '.editDegree', function() {
+                let id = $(this).attr("data-id");
                 console.log(id);
                 $.ajax({
-                    method:"get",
-                    url:"/admin/degree/get/"+id,
-                    success:function(response){
+                    method: "get",
+                    url: "/admin/degree/get/" + id,
+                    success: function(response) {
                         console.log(response);
-                        if(response.success==true){
+                        if (response.success == true) {
                             $("#degree_name").val(response.message.degree_name);
                             $("#description").val(response.message.description);
                             $("#status").val(response.message.status);
                         }
                     }
                 });
-                  // Update
-                  $("#updateDegrees").submit(function(event) {
+                // Update
+                $("#updateDegrees").submit(function(event) {
                     event.preventDefault();
                     $(".btnUpdate").text("Updating....");
                     $(".btnUpdate").prop("disabled", true);
@@ -260,9 +264,9 @@
                         method: "post",
                         url: "/admin/degree/edit/" + id,
                         data: formdata,
-                        processData:false,
-                        contentType:false,
-                        success:function(response){
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
                             if (response.success == true) {
                                 Swal.fire({
                                     icon: "success",
@@ -272,8 +276,12 @@
                                     timer: 1500
                                 });
                                 setTimeout(() => {
-                                    location.reload();
+                                    $("#editModal").modal("hide");
+                                    $("#updateDegrees").trigger("reset");
+                                    table.draw();
                                 }, 1500);
+                                $(".btnUpdate").text("Update");
+                                $(".btnUpdate").prop("disabled", false);
                             } else {
                                 Swal.fire({
                                     icon: "error",
@@ -316,8 +324,11 @@
                                     timer: 1500
                                 });
                                 setTimeout(() => {
-                                    location.reload();
+                                    $("#deleteModal").modal("hide");
+                                    table.draw();
                                 }, 1500);
+                                $(".btnDelete").text("Confirm Delete");
+                                $(".btnDelete").prop("disabled", false);
                             } else {
                                 Swal.fire({
                                     icon: "error",

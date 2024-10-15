@@ -169,6 +169,34 @@
     <script>
         $(document).ready(function() {
 
+            var table = $("#display-industry").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.industry') }}",
+                columns: [{
+                    data: "DT_RowIndex",
+                    name: "DT_RowIndex"
+                }, {
+                    data: "industry_name",
+                    name: "industry_name"
+                }, {
+                    data: "description",
+                    name: "description"
+                }, {
+                    data: "status",
+                    name: "status",
+                    render: function(data) {
+                        if (data == 1) {
+                            return `<span class="badge badge-success">Active</span>`;
+                        } else {
+                            return `<span class="badge badge-danger">Inactive</span>`
+                        }
+                    }
+                }, {
+                    data: "action",
+                    name: "action"
+                }, ]
+            });
             // Industry Input fied add
             $("#addMoreIndustry").on("click", function() {
                 $("#fetchInputData").append(`
@@ -214,8 +242,12 @@
                                 timer: 1500
                             });
                             setTimeout(() => {
-                                location.reload();
+                                $("#modalId").modal("hide");
+                                $("#addIndustries").trigger("reset");
+                                table.draw();
                             }, 1500);
+                            $("#btnSave").prop("disabled", false);
+                            $("#btnSave").text("Save");
                         }
                     },
                     error: function(response) {
@@ -232,34 +264,7 @@
                 })
             });
 
-            $("#display-industry").DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('admin.industry') }}",
-                columns: [{
-                    data: "DT_RowIndex",
-                    name: "DT_RowIndex"
-                }, {
-                    data: "industry_name",
-                    name: "industry_name"
-                }, {
-                    data: "description",
-                    name: "description"
-                }, {
-                    data: "status",
-                    name: "status",
-                    render: function(data) {
-                        if (data == 1) {
-                            return `<span class="badge badge-success">Active</span>`;
-                        } else {
-                            return `<span class="badge badge-danger">Inactive</span>`
-                        }
-                    }
-                }, {
-                    data: "action",
-                    name: "action"
-                }, ]
-            });
+
 
             $(document).on("click", '.deleteIndustry', function() {
                 let id = $(this).attr("data-id");
@@ -282,8 +287,11 @@
                                     timer: 1500
                                 });
                                 setTimeout(() => {
-                                    location.reload();
+                                    $("#deleteModal").modal("hide");
+                                    table.draw();
                                 }, 1500);
+                                $(".btnDelete").text("Confirm Delete");
+                                $(".btnDelete").prop("disabled", false);
                             } else {
                                 Swal.fire({
                                     icon: "error",
@@ -324,9 +332,9 @@
                         method: "post",
                         url: "/admin/industry/edit/" + id,
                         data: formdata,
-                        processData:false,
-                        contentType:false,
-                        success:function(response){
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
                             if (response.success == true) {
                                 Swal.fire({
                                     icon: "success",
@@ -336,8 +344,11 @@
                                     timer: 1500
                                 });
                                 setTimeout(() => {
-                                    location.reload();
+                                    $("#editModal").modal("hide");
+                                    $("#editIndustries").trigger("reset");
                                 }, 1500);
+                                $(".btnUpdate").text("Update");
+                                $(".btnUpdate").prop("disabled", false);
                             } else {
                                 Swal.fire({
                                     icon: "error",

@@ -77,7 +77,7 @@
                     <form id="updateGradingType">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalTitleId">
-                              Edit Grading Type
+                                Edit Grading Type
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -95,17 +95,15 @@
                                         <tbody id="fetchRow">
                                             @csrf
                                             <tr>
-                                                <td><input type="text" name="grading_type" id="grading_type" class="form-control" placeholder="" /> </td>
-                                                <td><input type="text" name="description" id="description" class="form-control" placeholder="" /></td>
+                                                <td><input type="text" name="grading_type" id="grading_type"
+                                                        class="form-control" placeholder="" /> </td>
+                                                <td><input type="text" name="description" id="description"
+                                                        class="form-control" placeholder="" /></td>
                                                 <td>
-                                                        <select
-                                                            class="form-select"
-                                                            name="status"
-                                                            id="status"
-                                                        >
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Inactive</option>
-                                                        </select>
+                                                    <select class="form-select" name="status" id="status">
+                                                        <option value="1">Active</option>
+                                                        <option value="0">Inactive</option>
+                                                    </select>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -128,15 +126,17 @@
         {{-- Edit Modal --}}
 
         {{-- Delete Modal --}}
-        <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <form id="addGradingType">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalTitleId">
-                              Delete Grading Type
+                                Delete Grading Type
                             </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -159,14 +159,14 @@
 
     <script>
         $(document).ready(function() {
-            $("#fetch-grading-type").DataTable({
+            var table = $("#fetch-grading-type").DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('admin.grading-type') }}",
-                columns: [
-                    {
-                        data:"DT_RowIndex", name:"DT_RowIndex"
-                    },{
+                columns: [{
+                        data: "DT_RowIndex",
+                        name: "DT_RowIndex"
+                    }, {
                         data: "grading_type",
                         name: "grading_type",
                     },
@@ -228,8 +228,12 @@
                                 timer: 1500,
                             });
                             setTimeout(() => {
-                                location.reload();
+                                $("#modalId").modal("hide");
+                                $("#addGradingType").trigger("reset");
+                                table.draw();
                             }, 1500);
+                            $("#btnSave").text("Save");
+                            $("#btnSave").prop("disabled", false);
                         }
                     },
                     error: function(data) {
@@ -248,43 +252,45 @@
 
             // Edit Modal
 
-            $(document).on("click",".editGradingType",function(){
-                let id=$(this).attr("data-id");
+            $(document).on("click", ".editGradingType", function() {
+                let id = $(this).attr("data-id");
                 $.ajax({
-                    method:"Get",
-                    url:"/admin/grading-type/get/"+id,
-                    success:function(response){
+                    method: "Get",
+                    url: "/admin/grading-type/get/" + id,
+                    success: function(response) {
                         console.log(response);
-                       $("#grading_type").val(response.message.grading_type);
-                       $("#description").val(response.message.description);
-                       $("#status").val(response.message.status);
+                        $("#grading_type").val(response.message.grading_type);
+                        $("#description").val(response.message.description);
+                        $("#status").val(response.message.status);
                     }
                 });
 
                 // Update it
-                $("#updateGradingType").submit(function(event){
+                $("#updateGradingType").submit(function(event) {
                     event.preventDefault();
-                    $("#btnEdit").prop("disabled",true);
+                    $("#btnEdit").prop("disabled", true);
                     $("#btnEdit").text("Updating...");
-                    let formdata=new FormData(this);
+                    let formdata = new FormData(this);
                     $.ajax({
-                        method:"post",
-                        url:"/admin/grading-type/edit/"+id,
-                        data:formdata,
-                        processData:false,
-                        contentType:false,
-                        success:function(response){
+                        method: "post",
+                        url: "/admin/grading-type/edit/" + id,
+                        data: formdata,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
                             console.log(response);
-                            if(response.success==true){
+                            if (response.success == true) {
                                 Swal.fire({
-                                    icon:"success",
-                                    title:"Success",
-                                    text:"Grading Type Updated Successfully",
-                                    showConfirmButton:false,
-                                    timer:1500
+                                    icon: "success",
+                                    title: "Success",
+                                    text: "Grading Type Updated Successfully",
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 });
                                 setTimeout(() => {
-                                    location.reload();
+                                    $("#editModal").modal("hide");
+                                    $("#updateGradingType").trigger("reset");
+                                    table.draw();
                                 }, 1500);
                             }
                         }
@@ -294,25 +300,26 @@
 
             // Delete Modal
 
-            $(document).on("click",".deleteGradingType",function(){
-                let id=$(this).attr("data-id");
-                $("#btnDelete").on("click",function(){
+            $(document).on("click", ".deleteGradingType", function() {
+                let id = $(this).attr("data-id");
+                $("#btnDelete").on("click", function() {
                     $("#btnDelete").text("Deleting...");
-                    $("#btnDelete").prop("disabled",true);
+                    $("#btnDelete").prop("disabled", true);
                     $.ajax({
-                        method:"Get",
-                        url:"/admin/grading-type/delete/"+id,
-                        success:function(response){
-                            if(response.success==true){
+                        method: "Get",
+                        url: "/admin/grading-type/delete/" + id,
+                        success: function(response) {
+                            if (response.success == true) {
                                 Swal.fire({
-                                    icon:"success",
-                                    title:"Grading Type Deleted Successfully",
-                                    showConfirmButton:false,
-                                    timer:1500,
+                                    icon: "success",
+                                    title: "Grading Type Deleted Successfully",
+                                    showConfirmButton: false,
+                                    timer: 1500,
                                 });
-                                setTimeout(()=>{
-                                    location.reload();
-                                },1500)
+                                setTimeout(() => {
+                                    $("#deleteModal").modal("hide");
+                                    table.draw();
+                                }, 1500);
                             }
                         }
                     })

@@ -81,7 +81,7 @@
                         <a href="{{ route('admin.grading-type') }}"><i class="bi bi-people-fill"></i>Grading Type</a>
                     </li>
                      <li class="active">
-                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Skill</a>
+                        <a href="{{ route('admin.skill') }}"><i class="bi bi-people-fill"></i>Skill</a>
                     </li>
                     <li class="active">
                         <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Grading</a>

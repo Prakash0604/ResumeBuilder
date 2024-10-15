@@ -214,8 +214,12 @@
                                 timer: 1500
                             });
                             setTimeout(() => {
-                                location.reload();
+                               $("#modalId").modal("hide");
+                               $("#addJobLevels").trigger("reset");
+                               table.draw();
                             }, 1500);
+                            $("#btnSave").prop("disabled", false);
+                            $("#btnSave").text("Save");
                         }
                     },
                     error: function(response) {
@@ -232,7 +236,7 @@
                 })
             });
 
-            $("#display-job-level").DataTable({
+            var table=$("#display-job-level").DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('admin.job_level') }}",
@@ -282,8 +286,11 @@
                                     timer: 1500
                                 });
                                 setTimeout(() => {
-                                    location.reload();
+                                   $("#deleteModal").modal("hide");
+                                   table.draw();
                                 }, 1500);
+                                $(".btnDelete").text("Confirm Delete");
+                                $(".btnDelete").prop("disabled", false);
                             } else {
                                 Swal.fire({
                                     icon: "error",
@@ -336,8 +343,12 @@
                                     timer: 1500
                                 });
                                 setTimeout(() => {
-                                    location.reload();
+                                    $("#editModal").modal("hide");
+                                    $("#editJobLevels").trigger("reset");
+                                    table.draw();
                                 }, 1500);
+                                $(".btnUpdate").text("Update");
+                                $(".btnUpdate").prop("disabled", false);
                             } else {
                                 Swal.fire({
                                     icon: "error",

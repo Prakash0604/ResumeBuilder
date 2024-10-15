@@ -157,7 +157,7 @@
     {{-- Delete Modal --}}
     <script>
         $(document).ready(function() {
-            var table=$("#fetch-skills").DataTable({
+            var table = $("#fetch-skills").DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('admin.skill') }}",
@@ -221,9 +221,13 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                            $('#addSkills').trigger("reset"); // Clear form inputs
-                            $('#modalId').modal('hide'); // Close the modal
-                            table.draw();
+                            setTimeout(() => {
+                                $('#addSkills').trigger("reset"); // Clear form inputs
+                                $('#modalId').modal('hide'); // Close the modal
+                                table.draw();
+                            }, 1500);
+                            $("#btnSave").text("Save");
+                            $("#btnSave").prop("disabled", false);
                         }
                     },
                     error: function(xhr) {
@@ -278,8 +282,12 @@
                                     timer: 1500
                                 });
                                 setTimeout(() => {
-                                    location.reload();
-                                }, 1500)
+                                    $("#editModal").modal("hide");
+                                    $("#updateSkills").trigger("reset");
+                                    table.draw();
+                                }, 1500);
+                                $("#btnUpdate").text("Update");
+                                $("#updateSkills").prop("disabled", false);
                             }
                         },
                         error: function(xhr) {
@@ -317,9 +325,12 @@
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
-                               $("#deleteModal").modal("hide");
-                               $("#deleteSkills").trigger("reset");
-                               table.draw();
+                                setTimeout(() => {
+                                    $("#deleteModal").modal("hide");
+                                    table.draw();
+                                }, 1500);
+                                $("#btnDelete").text("Confirm Delete");
+                                $("#btnDelete").prop("disabled", false);
                             }
                         },
                         error: function(xhr) {
@@ -334,7 +345,7 @@
                         }
                     })
                 })
-            })
+            });
         })
     </script>
 @endsection

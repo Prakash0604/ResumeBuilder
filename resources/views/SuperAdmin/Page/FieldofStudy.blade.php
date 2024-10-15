@@ -146,7 +146,8 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="button" class="btn btn-danger deleteButton" id="deleteButton">Confirm Delete</button>
+                        <button type="button" class="btn btn-danger deleteButton" id="deleteButton">Confirm
+                            Delete</button>
                     </div>
                 </form>
             </div>
@@ -156,7 +157,7 @@
     {{-- Delete Modal --}}
     <script>
         $(document).ready(function() {
-            $("#get-Field-data").DataTable({
+            var table = $("#get-Field-data").DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('admin.field') }}",
@@ -225,8 +226,12 @@
                                 timer: 1500
                             });
                             setTimeout(() => {
-                                location.reload();
+                                $("#modalId").modal("hide");
+                                $("#addFields").trigger("reset");
+                                table.draw();
                             }, 1500);
+                            $("#saveButton").text("Save");
+                            $("#saveButton").prop("disabled", false);
                         }
                     },
                     error: function(data) {
@@ -278,8 +283,12 @@
                                     timer: 1500
                                 });
                                 setTimeout(() => {
-                                    location.reload();
+                                    $("#editModal").modal("hide");
+                                    $("#updateFields").trigger("reset");
+                                    table.draw();
                                 }, 1500);
+                                $(".updatButton").text("Update");
+                                $(".updatButton").prop("disabled", false);
                             }
                         },
                         error: function(error) {
@@ -297,16 +306,16 @@
                     });
                 })
             })
-            $(document).on("click",".deleteField",function(){
-                let id=$(this).attr("Data-id");
-                $(document).on("click",".deleteButton",function(event){
+            $(document).on("click", ".deleteField", function() {
+                let id = $(this).attr("Data-id");
+                $(document).on("click", ".deleteButton", function(event) {
                     event.preventDefault();
                     $(".deleteButton").text("Deleting...");
-                    $(".deleteButton").prop("disabled",true);
+                    $(".deleteButton").prop("disabled", true);
                     $.ajax({
-                        method:"get",
-                        url:"/admin/field/delete/"+id,
-                        success:function(response){
+                        method: "get",
+                        url: "/admin/field/delete/" + id,
+                        success: function(response) {
                             if (response.success == true) {
                                 Swal.fire({
                                     icon: "success",
@@ -316,8 +325,11 @@
                                     timer: 1500
                                 });
                                 setTimeout(() => {
-                                    location.reload();
+                                    $("#deleteModal").modal("hide");
+                                    table.draw();
                                 }, 1500);
+                                $(".deleteButton").text("Update");
+                                $(".deleteButton").prop("disabled", false);
                             }
                         },
                         error: function(error) {
@@ -332,9 +344,9 @@
                             $(".deleteButton").prop("disabled", false);
 
                         }
-                      })
                     })
                 })
             })
+        })
     </script>
 @endsection
