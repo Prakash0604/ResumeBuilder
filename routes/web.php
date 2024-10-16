@@ -9,6 +9,7 @@ use App\Http\Controllers\SuperAdmin\GradingController;
 use App\Http\Controllers\SuperAdmin\GradingTypeController;
 use App\Http\Controllers\SuperAdmin\SkillController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
+use App\Http\Controllers\YearController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,9 +43,14 @@ Route::get('/others',function(){
 });
 
 
+    // Route::get('/admin/register',[SuperAdminController::class,'index'])->name('admin.register');
+    // Route::post('/admin/register',[SuperAdminController::class,'store']);
+    // Route::get('/admin/login',[SuperAdminController::class,'login'])->name('admin.login');
+    // Route::post('/admin/login',[SuperAdminController::class,'storeLogin']);
+
     Route::get('/admin/register',[SuperAdminController::class,'index'])->name('admin.register');
     Route::post('/admin/register',[SuperAdminController::class,'store']);
-    Route::get('/admin/login',[SuperAdminController::class,'login'])->name('admin.login');
+    Route::get('/admin/login',[SuperAdminController::class,'login'])->name('login');
     Route::post('/admin/login',[SuperAdminController::class,'storeLogin']);
 
 
@@ -106,12 +112,20 @@ Route::middleware('adminAuth')->group(function(){
         Route::get('grading/delete/{id}',[GradingController::class,'deleteGrading']);
 
 
+        // Skills
+        Route::get('year',[YearController::class,'index'])->name('admin.year');
+        Route::post('year/store',[YearController::class,'storeYear']);
+        Route::get('year/get/{id}',[YearController::class,'getYear']);
+        Route::post('year/edit/{id}',[YearController::class,'updateYear']);
+        Route::get('year/delete/{id}',[YearController::class,'deleteYear']);
 
 
 
 
 
-        Route::get('logout',[AdminUserController::class,'adminLogout'])->name('admin.logout');
+
+
+        Route::get('logout',[SuperAdminController::class,'adminLogout'])->name('admin.logout');
     });
 });
 

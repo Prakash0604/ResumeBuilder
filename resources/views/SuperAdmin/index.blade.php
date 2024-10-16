@@ -84,10 +84,10 @@
                         <a href="{{ route('admin.skill') }}"><i class="bi bi-people-fill"></i>Skill</a>
                     </li>
                     <li class="active">
-                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Grading</a>
+                        <a href="{{ route('admin.grading') }}"><i class="bi bi-people-fill"></i>Grading</a>
                     </li>
                      <li class="active">
-                        <a href="{{ route('admin.industry') }}"><i class="bi bi-people-fill"></i>Year</a>
+                        <a href="{{ route('admin.year') }}"><i class="bi bi-people-fill"></i>Year</a>
                     </li>
                     <li>
                         <a href=""><i class="bi bi-person-circle"></i> Profile</a>

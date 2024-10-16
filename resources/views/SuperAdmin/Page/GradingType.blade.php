@@ -288,6 +288,8 @@
                                     timer: 1500
                                 });
                                 setTimeout(() => {
+                                    $("#btnEdit").prop("disabled", false);
+                                    $("#btnEdit").text("Update");
                                     $("#editModal").modal("hide");
                                     $("#updateGradingType").trigger("reset");
                                     table.draw();
@@ -319,6 +321,8 @@
                                 setTimeout(() => {
                                     $("#deleteModal").modal("hide");
                                     table.draw();
+                                    $("#btnDelete").text("Confirm Delete");
+                                    $("#btnDelete").prop("disabled", false);
                                 }, 1500);
                             }
                         }

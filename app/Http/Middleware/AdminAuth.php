@@ -16,9 +16,9 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(session()->has('email') && Auth::user()->position=='admin')
+        if(Auth::user() && Auth::user()->position=='admin')
         return $next($request);
-    else
-    return redirect()->route('admin.login')->with(['message'=>'Please Login First']);
+        else
+        return redirect()->route('login')->with(['message'=>'Please Login First']);
     }
 }

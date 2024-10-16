@@ -16,9 +16,9 @@ class SuperAdminController extends Controller
         $this->modal=$superAdminService;
     }
     public function index(){
-        if(session()->has('email') && Auth::user()->position ==='admin'){
+        if(Auth::user() && Auth::user()->position ==='admin'){
             return redirect()->route('admin.users');
-        }else if(session()->has('email') && Auth::user()->position === 'user'){
+        }else if(Auth::user() && Auth::user()->position === 'user'){
             return redirect('/sidebar');
         }
         return view('SuperAdmin.Auth.register');
@@ -27,7 +27,7 @@ class SuperAdminController extends Controller
     public function store(SuperAdminRequest $request){
         try{
             $data=$request->validated();
-            $data['position']="admin";
+            // $data['position']="admin";
             $this->modal->storeUser($data);
             return redirect()->back()->with(['message'=>'User has been created']);
         }catch(\Exception $e){
@@ -36,9 +36,9 @@ class SuperAdminController extends Controller
     }
 
     public function login(){
-        if(session()->has('email') && Auth::user()->position ==='admin'){
+        if(Auth::user() && Auth::user()->position ==='admin'){
             return redirect()->route('admin.users');
-        }else if(session()->has('email') && Auth::user()->position === 'user'){
+        }else if(Auth::user() && Auth::user()->position === 'user'){
             return redirect('/sidebar');
         }
         return view('SuperAdmin.Auth.login');
@@ -72,6 +72,6 @@ class SuperAdminController extends Controller
 
     public function adminLogout(){
         Auth::logout();
-        return redirect('/admin/login')->with(['message'=>'Logout Successfully']);
+        return redirect()->route('login')->with(['message'=>'Logout Successfully']);
     }
 }
