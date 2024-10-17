@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function degree(){
+        return $this->hasMany(Degree::class);
+    }
+
+    public function education(){
+        return $this->hasMany(Education::class);
+    }
 }

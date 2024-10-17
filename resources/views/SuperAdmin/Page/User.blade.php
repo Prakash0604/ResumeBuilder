@@ -11,6 +11,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Address</th>
                         <th scope="col">Contact</th>
+                        <th scope="col">Position</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -46,6 +47,9 @@
                         {
                             data:"contact",
                             name:"contact"
+                        },
+                        {
+                            data:"position", name:"position"
                         },
                         {
                             data: 'action',

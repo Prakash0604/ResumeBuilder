@@ -62,7 +62,7 @@ class SuperAdminController extends Controller
                 return redirect()->route('admin.users');
             }else{
                 Session::put(['email'=>$request->email]);
-                return redirect('/sidebar');
+                return redirect()->route('personal_detail');
             }
         }else{
             return back()->with(['message'=>'Invalid email or password']);
@@ -72,6 +72,6 @@ class SuperAdminController extends Controller
 
     public function adminLogout(){
         Auth::logout();
-        return redirect()->route('login')->with(['message'=>'Logout Successfully']);
+        return redirect()->route('user.login')->with(['message'=>'Logout Successfully']);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EducationController;
+use App\Http\Controllers\PersonalDetailController;
 use App\Http\Controllers\SuperAdmin\AdminUserController;
 use App\Http\Controllers\SuperAdmin\IndustryController;
 use App\Http\Controllers\SuperAdmin\JobLevelController;
@@ -23,9 +25,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/sidebar',function(){
     return view('Form/personal-detail-form');
@@ -48,10 +50,10 @@ Route::get('/others',function(){
     // Route::get('/admin/login',[SuperAdminController::class,'login'])->name('admin.login');
     // Route::post('/admin/login',[SuperAdminController::class,'storeLogin']);
 
-    Route::get('/admin/register',[SuperAdminController::class,'index'])->name('admin.register');
-    Route::post('/admin/register',[SuperAdminController::class,'store']);
-    Route::get('/admin/login',[SuperAdminController::class,'login'])->name('login');
-    Route::post('/admin/login',[SuperAdminController::class,'storeLogin']);
+    Route::get('/register',[SuperAdminController::class,'index'])->name('user.register');
+    Route::post('/register',[SuperAdminController::class,'store']);
+    Route::get('/',[SuperAdminController::class,'login'])->name('user.login');
+    Route::post('/',[SuperAdminController::class,'storeLogin']);
 
 
 Route::middleware('adminAuth')->group(function(){
@@ -133,6 +135,15 @@ Route::middleware('adminAuth')->group(function(){
 
 Route::middleware('userAuth')->group(function(){
     Route::prefix('user')->group(function(){
-        Route::get('user',[AdminUserController::class,'index']);
+
+        // Personal Detail
+        Route::get('personal-detail',[PersonalDetailController::class,'index'])->name('personal_detail');
+        Route::post('personal-detail',[PersonalDetailController::class,'update'])->name('personal_detail.update');
+
+        // Education Detail
+        Route::get('education',[EducationController::class,'index'])->name('user.education');
+        Route::post('education',[EducationController::class,'store'])->name('user.education.store');
+        Route::get('education/get/{id}',[EducationController::class,'getEducation']);
+        Route::post('education/update/{id}',[EducationController::class,'updateEducation']);
     });
 });

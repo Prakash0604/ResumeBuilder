@@ -16,9 +16,9 @@ class UserAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(session()->has('email') && Auth::user()->position=='user')
-        return $next($request);
+    if(Auth::user() && Auth::user()->position =='user')
+    return $next($request);
     else
-    return redirect()->route('admin.login')->with(['message'=>'Please Login First']);
+    return redirect()->route('user.login')->with(['message'=>'Please Login First']);
     }
 }

@@ -157,7 +157,7 @@
                     <div class="mt-3 mb-3">
                         <button class="btn btn-primary mr-2">Register</button>
                         Alreay Register ?
-                        <a href="" >Login</a>
+                        <a href="{{ route('user.login') }}" >Login</a>
                     </div>
                 </form>
             </div>
