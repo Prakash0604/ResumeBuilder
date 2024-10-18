@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EducationController;
+use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\PersonalDetailController;
 use App\Http\Controllers\SuperAdmin\AdminUserController;
 use App\Http\Controllers\SuperAdmin\IndustryController;
@@ -145,5 +146,14 @@ Route::middleware('userAuth')->group(function(){
         Route::post('education',[EducationController::class,'store'])->name('user.education.store');
         Route::get('education/get/{id}',[EducationController::class,'getEducation']);
         Route::post('education/update/{id}',[EducationController::class,'updateEducation']);
+        Route::get('education/delete/{id}',[EducationController::class,'destoryEducation']);
+
+
+        // Experience Detail
+        Route::get('experience',[ExperienceController::class,'index'])->name('user.experience');
+        Route::post('experience',[ExperienceController::class,'store'])->name('user.experience.store');
+        Route::get('experience/get/{id}',[ExperienceController::class,'getExperience']);
+        Route::post('experience/update/{id}',[ExperienceController::class,'updateExperience']);
+        Route::get('experience/delete/{id}',[ExperienceController::class,'destoryExperience']);
     });
 });

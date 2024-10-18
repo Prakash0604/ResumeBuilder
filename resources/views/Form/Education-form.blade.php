@@ -16,7 +16,22 @@
                 <strong>{{ session()->get('error') }}</strong>
             </div>
         @endif
-        <div class="container educations_toggle">
+        <div class="container mb-2 mt-2">
+            <div class="table-responsive">
+                <table class="table table-bordered table-primary table-hover" id="get-Education">
+                    <thead>
+                        <tr>
+                            <th scope="col">S.N </th>
+                            <th scope="col">Degree </th>
+                            <th scope="col">Education</th>
+                            <th scope="col">Action </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <div class="container educations_toggle mt-4">
             <form action="{{ route('user.education.store') }}" method="POST" id="educationStore">
                 <div class="card-group">
                     <div class="card">
@@ -59,9 +74,7 @@
                             <div class="row mt-3 mb-3">
                                 <div class="col-md-6">
                                     <label for="" class="form-label">Institute</label>
-                                    <input type="text" name="institute" id=""
-                                        class="form-control @error('institute') is-invalid  @enderror"
-                                        placeholder="Enter the institute" aria-describedby="helpId" />
+                                    <input type="text" name="institute" id="" class="form-control @error('institute') is-invalid  @enderror"   placeholder="Enter the institute" aria-describedby="helpId" />
                                     @error('institute')
                                         <small id="helpId" class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -133,21 +146,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-
-        <div class="container mb-2 mt-2">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover" id="get-Education">
-                    <thead>
-                        <tr>
-                            <th scope="col">S.N </th>
-                            <th scope="col">Degree </th>
-                            <th scope="col">Education</th>
-                            <th scope="col">Action </th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
         </div>
     </div>
 
@@ -337,8 +335,8 @@
                                     Created By : <span id="created_by"></span>
                                 </div>
                                 <div class="col">
-                                Created At : <span id="created_at"></span>
-                            </div>
+                                    Created At : <span id="created_at"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -486,16 +484,61 @@
                         $("#fetchInstitute").val(response.message.institute);
                         $("#fetchUniversity").val(response.message.university);
                         $("#fetchGrading").val(response.message.grading_type.grading_type);
-                        $("#fetchEnroll").val(response.message.current_studying);
+                        if(response.message.current_studying == null){
+                            $("#fetchEnroll").val("Already Passout");
+                        }else{
+                            $("#fetchEnroll").val(response.message.current_studying);
+                        }
                         $("#fetchJoinYear").val(response.message.join_year.year_name);
                         if (response.message.pass_year != null) {
                             $("#fetchPassYear").val(response.message.pass_year.year_name);
+                        } else {
+                            $("#fetchPassYear").val("Currently Entrolled");
                         }
 
-                        $("#created_by").text(response.message.created_by.first_name +" "+response.message.created_by.middle_name+" "+response.message.created_by.last_name);
+                        $("#created_by").text(response.message.created_by.first_name + " " +
+                            response.message.created_by.middle_name + " " + response.message
+                            .created_by.last_name);
                         $("#created_at").text(response.message.created_at);
 
                     }
+                })
+            });
+
+            $(document).on("click", ".deleteButton", function() {
+                let id = $(this).attr("data-id");
+                $("#deleteEducations").submit(function(event) {
+                    event.preventDefault();
+                    $("#btnDelete").text("Deleting...");
+                    $("#btnDelete").prop("disabled", true);
+                    $.ajax({
+                        method: "get",
+                        url: "/user/education/delete/" + id,
+                        success: function(response) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Success",
+                                text: "Education Deleted Successfully",
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
+                            $("#btnDelete").text("Confirm Delete");
+                            $("#btnDelete").prop("disabled", false);
+                            $("#deleteModal").modal("hide");
+                            table.draw();
+                        },
+                        error: function(xhr) {
+                            Swal.fire({
+                                icon: "warning",
+                                title: "Something went wrong ?",
+                                text: xhr.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
+                            $("#btnDelete").text("Confirm Delete");
+                            $("#btnDelete").prop("disabled", false);
+                        }
+                    });
                 })
             })
         });

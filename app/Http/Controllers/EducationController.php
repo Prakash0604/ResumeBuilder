@@ -27,7 +27,7 @@ class EducationController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $education = $this->modal->all();
+            $education = $this->modal->latest()->get();
             return DataTables::of($education)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -43,7 +43,6 @@ class EducationController extends Controller
                 ->make(true);
         }
 
-        $user = auth()->user();
         $title = "Education Information";
         $data = [
             'degrees' => Degree::pluck('id', 'degree_name'),
@@ -52,7 +51,7 @@ class EducationController extends Controller
             'years' => Year::pluck('id', 'year_name'),
         ];
 
-        return view('Form.Education-form', compact('title', 'user', 'data'));
+        return view('Form.Education-form', compact('title', 'data'));
     }
 
     public function store(EducationRequest $request){
@@ -92,6 +91,18 @@ class EducationController extends Controller
             }catch(\Exception $e){
                 DB::rollBack();
                 return response()->json(['success'=>false,'message'=>$e->getMessage(),'line'=>$e->getLine()]);
+            }
+        }
+
+        public function destoryEducation($id){
+            DB::beginTransaction();
+            try{
+                $this->education->deleteData($id);
+                DB::commit();
+                return response()->json(['success'=>true]);
+            }catch(\Exception $e){
+                DB::rollBack();
+                return response()->json(['success'=>false,'message'=>$e->getMessage(),'lines'=>$e->getLine()]);
             }
         }
     }

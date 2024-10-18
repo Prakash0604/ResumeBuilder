@@ -3,9 +3,10 @@
     <div class="container mt-4 mb-2">
         <div class="container mb-2 mt-2">
             <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="fetch-experience">
                     <thead>
                         <tr>
+                            <th scope="col">S.N </th>
                             <th scope="col">Position </th>
                             <th scope="col">Organization </th>
                             <th scope="col">Action </th>
@@ -32,7 +33,7 @@
             <form action="" method="POST">
                 <div class="card-group">
                     <div class="card">
-                        <h1 class="text-center mt-3">Education Information</h1>
+                        <h1 class="text-center mt-3">{{ $title }}</h1>
                         <div class="card-body">
                             <div class="row mt-3 mb-3">
                                 <div class="col-md-6">
@@ -132,10 +133,7 @@
     </div>
     <script>
         $(document).ready(function() {
-            $(".educations_toggle").hide();
-            $("#addEducations").on("click", function() {
-                $(".educations_toggle").toggle(1000);
-            })
+
         })
 
         CKEDITOR.replace('roles_response');

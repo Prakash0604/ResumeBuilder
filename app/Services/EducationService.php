@@ -22,4 +22,8 @@ class EducationService{
         $id=$this->modal->find($id);
         return $id->update($array);
     }
+
+    public function deleteData($id){
+        return $this->modal->find($id)->delete();
+    }
 }

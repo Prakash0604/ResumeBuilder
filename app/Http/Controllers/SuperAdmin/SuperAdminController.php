@@ -39,7 +39,7 @@ class SuperAdminController extends Controller
         if(Auth::user() && Auth::user()->position ==='admin'){
             return redirect()->route('admin.users');
         }else if(Auth::user() && Auth::user()->position === 'user'){
-            return redirect('/sidebar');
+            return redirect()->route('personal_detail');
         }
         return view('SuperAdmin.Auth.login');
     }

@@ -34,19 +34,19 @@
         <nav id="sidebar" class="scrollable">
             <div class="p-4 pt-5">
                 <a href="#" class="img logo rounded-circle mb-5">
-                @if (Auth::user() && $user->profile)
-                    <img src="{{ asset('storage/' . $user->profile) }}" alt="" height="150" width="150" class="rounded-circle">
+                @if (Auth::user() && auth()->user()->profile)
+                    <img src="{{ asset('storage/' . auth()->user()->profile) }}" alt="" height="150" width="150" class="rounded-circle">
                 @endif
                 </a>
                 <ul class="list-unstyled components mb-5">
                     <li>
-                        <a href="#">Personal Detail</a>
+                        <a href="{{ route('personal_detail') }}">Personal Detail</a>
                     </li>
                     <li>
-                        <a href="#">Education</a>
+                        <a href="{{ route('user.education') }}">Education</a>
                     </li>
                     <li>
-                        <a href="#">Experience</a>
+                        <a href="{{ route('user.experience') }}">Experience</a>
                     </li>
                     <li>
                         <a href="#">Additional Fields</a>
