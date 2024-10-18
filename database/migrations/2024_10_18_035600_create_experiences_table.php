@@ -19,6 +19,9 @@ return new class extends Migration
             $table->longText('roles_responsibility')->nullable();
             $table->unsignedBigInteger('industry_id');
             $table->unsignedBigInteger('job_level_id');
+            $table->string('starting_date');
+            $table->string('ending_date')->nullable();
+            $table->string('status')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onUpdate('cascade');
