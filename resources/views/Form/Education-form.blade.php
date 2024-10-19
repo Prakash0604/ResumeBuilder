@@ -478,7 +478,7 @@
                     method: "get",
                     url: "/user/education/get/" + id,
                     success: function(response) {
-                        // console.log(response);
+                        console.log(response);
                         $("#fetchDegree").val(response.message.degree.degree_name);
                         $("#fetchField").val(response.message.field.field_name);
                         $("#fetchInstitute").val(response.message.institute);

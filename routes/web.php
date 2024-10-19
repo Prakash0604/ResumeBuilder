@@ -30,13 +30,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/sidebar',function(){
-    return view('Form/personal-detail-form');
-});
-
-Route::get('/education',function(){
-    return view('Form/Education-form');
-});
 Route::get('/experience',function(){
     return view('Form/Experience-form');
 });
@@ -153,6 +146,7 @@ Route::middleware('userAuth')->group(function(){
         Route::get('experience',[ExperienceController::class,'index'])->name('user.experience');
         Route::post('experience',[ExperienceController::class,'store'])->name('user.experience.store');
         Route::get('experience/get/{id}',[ExperienceController::class,'getExperience']);
+        Route::get('experience/detail/{id}',[ExperienceController::class,'experienceDetail']);
         Route::post('experience/update/{id}',[ExperienceController::class,'updateExperience']);
         Route::get('experience/delete/{id}',[ExperienceController::class,'destoryExperience']);
     });

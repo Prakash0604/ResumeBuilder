@@ -24,7 +24,7 @@ class ExperienceRequest extends FormRequest
         return [
             'position'=>'required',
             'organization_name'=>'required',
-            'roles_responsibility'=>'required',
+            'roles_responsibility'=>'required|string',
             'industry_id'=>'required',
             'job_level_id'=>'required',
             'starting_date'=>'required|date',
