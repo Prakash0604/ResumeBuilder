@@ -295,12 +295,19 @@
                             </tr>
                         </div>
                     </table>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Status</th>
+                            <td><span class="status"></span></td>
+                        </tr>
+                    </table>
                     <table class="table table-boredered">
                         <div class="col-md">
                             <strong>Roles & Responsibility</strong>
                             <textarea type="" id="roles_responsibility" class="form-control col-lg roles_responsibility" readonly></textarea>
                         </div>
                     </table>
+
                     <table class="table table-bordered">
                         <tr>
                             <th>Created By :</th>
@@ -389,6 +396,7 @@
             };
 
             $(document).on("click", ".editButton", function() {
+                ischecked();
                 let id = $(this).attr("data-id");
                 console.log(id);
                 $.ajax({
@@ -404,7 +412,7 @@
                         $("#starting_date").val(response.message.starting_date);
                         $("#ending_date").val(response.message.ending_date);
                         if (response.message.status != null) {
-                            $("#status").val(response.message.ending_date);
+                            $("#status").val(response.message.status);
                         }
                     }
                 });
@@ -474,6 +482,7 @@
                         $("#updated_by").text(response.message[0].created_by.first_name + " " +
                             response.message[0].created_by.middle_name + " " + response
                             .message[0].created_by.last_name);
+                            $(".status").text(response.message[0].status);
 
                     }
                 })

@@ -1,222 +1,239 @@
 @extends('index')
 @section('content')
-    <div class="container others_container">
-        <div class="card-group">
-            <form action="">
-            <div class="card">
-                <div class="card-body">
+    <div class="container others_container mb-2">
+            <div>
+                <form id="addAdditionalFields">
+                    <div class="card">
+                        <div class="card-body">
 
-                    {{-- Skills --}}
-                    <strong>Skills</strong>
-                    <div class="mb-3">
-                        <select multiple class="form-select form-select-lg" name="skills[]" id="skills_select">
-                            <option selected>Select one</option>
-                            <option value="">New Delhi</option>
-                            <option value="">Istanbul</option>
-                            <option value="">Jakarta</option>
-                        </select>
-                    </div>
+                            {{-- Skills --}}
+                            <strong>Skills</strong>
+                            <div class="mb-3">
+                                <select multiple class="form-select form-select-lg" name="skills[]" id="skills_select">
+                                    <option selected>Select one</option>
+                                    @forelse ($skills as $id=>$skill)
+                                    <option value="{{ $id }}">{{ $skill }}</option>
+                                    @empty
+                                    <option value="">No Data Found</option>
+                                    @endforelse
+                                </select>
+                            </div>
 
-                    {{-- Language --}}
-                    <strong>Languages</strong>
-                    <div class="card mt-4 mb-4">
-                        <div class="card-body lang_fetch mt-2 mb-2">
-                            <div class="row p-2">
-                                <div class="col-md-6">
-                                    <label for="" class="form-label">Language</label>
-                                    <input type="text" name="language[]" id="" class="form-control"
-                                        placeholder="" aria-describedby="helpId" />
+                            {{-- Language --}}
+                            <strong>Languages</strong>
+                            <div class="card mt-4 mb-4">
+                                <div class="card-body lang_fetch mt-2 mb-2">
+                                    <div class="row p-2">
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">Language</label>
+                                            <input type="text" name="language[]" id="" class="form-control"
+                                                placeholder="" aria-describedby="helpId" />
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">Reading</label>
+                                            <select class="form-select" name="lang_reading[]" id="">
+                                                <option selected>Select one</option>
+                                                <option value="Very Poor">Very Poor</option>
+                                                <option value="Poor">Poor</option>
+                                                <option value="Average">Average</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Excelent">Excelent</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row p-2 mb-3">
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">Writing</label>
+                                            <select class="form-select" name="lang_writing[]" id="">
+                                                <option selected>Select one</option>
+                                                <option value="Very Poor">Very Poor</option>
+                                                <option value="Poor">Poor</option>
+                                                <option value="Average">Average</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Excelent">Excelent</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">Speaking</label>
+                                            <select class="form-select" name="lang_speaking[]" id="">
+                                                <option selected>Select one</option>
+                                                <option value="Very Poor">Very Poor</option>
+                                                <option value="Poor">Poor</option>
+                                                <option value="Average">Average</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Excelent">Excelent</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <label for="" class="form-label">Reading</label>
-                                    <select class="form-select" name="lang_reading[]" id="">
-                                        <option selected>Select one</option>
-                                        <option value="">New Delhi</option>
-                                        <option value="">Istanbul</option>
-                                        <option value="">Jakarta</option>
-                                    </select>
+                                <div class="p-3">
+                                    <button type="button" id="addBtnLanguage" class="btn btn-outline-primary col-2">Add
+                                        More</button>
                                 </div>
                             </div>
 
-                            <div class="row p-2 mb-3">
-                                <div class="col-md-6">
-                                    <label for="" class="form-label">Writing</label>
-                                    <select class="form-select" name="lang_writing[]" id="">
-                                        <option selected>Select one</option>
-                                        <option value="">New Delhi</option>
-                                        <option value="">Istanbul</option>
-                                        <option value="">Jakarta</option>
-                                    </select>
+                            {{-- Project Start --}}
+                            <strong>Projects(Optional)</strong>
+                            <div class="card p-2 mb-4 mt-4">
+                                <div class="card-body fetch_projects">
+                                    <div class="project-section">
+                                        <div>
+                                            <label for="" class="form-label">Project Title</label>
+                                            <input type="text" name="project_title[]" id="" class="form-control"
+                                                placeholder="" aria-describedby="helpId" />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Description</label>
+                                            <textarea class="form-control" name="project_description[]" rows="3"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="" class="form-label">Speaking</label>
-                                    <select class="form-select" name="lang_speaking[]" id="">
-                                        <option selected>Select one</option>
-                                        <option value="">New Delhi</option>
-                                        <option value="">Istanbul</option>
-                                        <option value="">Jakarta</option>
-                                    </select>
+                                <div class="p-3">
+                                    <button type="button" id="btnAddProject" class="btn btn-outline-primary col-2">Add
+                                        More</button>
+                                </div>
+                            </div>
+
+
+                            {{-- Project End --}}
+                            {{-- Training --}}
+                            <strong>Training</strong>
+                            <div class="card p-2 mb-4 mt-4">
+                                <div class="card-body training_fetch">
+                                    <div class="training-section">
+                                        <div class="row p-2">
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Title</label>
+                                                <input type="text" name="training_title[]" id=""
+                                                    class="form-control" placeholder="" aria-describedby="helpId" />
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Year</label>
+                                                <select class="form-select" name="training_reading[]" id="">
+                                                    <option selected>Select one</option>
+                                                    @forelse ($years as $id=>$year)
+                                                    <option value="{{ $id }}">{{ $year }}</option>
+                                                    @empty
+                                                    <option value="">No Data Found</option>
+                                                    @endforelse
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-2">
+                                            <label for="" class="form-label">Institute</label>
+                                            <input type="text" name="training_institute[]" id=""
+                                                class="form-control" placeholder="" aria-describedby="helpId" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3">
+                                    <button type="button" id="btnAddTraining" class="btn btn-outline-primary col-2">Add
+                                        More</button>
+                                </div>
+                            </div>
+
+                            {{-- Award Certificate --}}
+                            <strong>Awards/Certificate</strong>
+                            <div class="card p-2 mb-4 mt-4">
+                                <div class="card-body fetch_awards">
+                                    <div class="award-section">
+                                        <div class="row p-2">
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Title</label>
+                                                <input type="text" name="award_title[]" id=""
+                                                    class="form-control" placeholder="" aria-describedby="helpId" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Associated/Institute</label>
+                                                <input type="text" name="award_institution[]" id=""
+                                                    class="form-control" placeholder="" aria-describedby="helpId" />
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Description</label>
+                                            <textarea class="form-control award_description" name="award_description[]" id="description" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3">
+                                    <button type="button" id="btnAddAward" class="btn btn-outline-primary col-2">Add
+                                        More</button>
+                                </div>
+                            </div>
+
+                            {{-- Social Links --}}
+                            <strong>Social Network</strong>
+                            <div class="card p-2 mt-4 mb-4">
+                                <div class="card-body fetch_social">
+                                    <div class="social-section">
+                                        <div class="row p-2 ">
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Social Media Name</label>
+                                                <input type="text" name="social_name[]" id=""
+                                                    class="form-control" placeholder="" aria-describedby="helpId" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Profile URL</label>
+                                                <input type="url" name="social_url[]" id=""
+                                                    class="form-control" placeholder="" aria-describedby="helpId" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3">
+                                    <button type="button" id="btnAddSocialUrl" class="btn btn-outline-primary col-2">Add
+                                        More</button>
+                                </div>
+                            </div>
+
+                            {{-- References --}}
+
+                            <strong>References</strong>
+                            <div class="card p-2 mt-4 mb-4">
+                                <div class="card-body fetch_reference">
+                                    <div class="reference-content">
+                                        <div class="row p-2">
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Reference Person</label>
+                                                <input type="text" name="ref_name[]" id=""
+                                                    class="form-control" placeholder="" aria-describedby="helpId" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Position</label>
+                                                <input type="url" name="ref_position[]" id=""
+                                                    class="form-control" placeholder="" aria-describedby="helpId" />
+                                            </div>
+                                        </div>
+                                        <div class="row p-2">
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Email</label>
+                                                <input type="text" name="ref_email[]" id=""
+                                                    class="form-control" placeholder="" aria-describedby="helpId" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Company Name</label>
+                                                <input type="url" name="company_name[]" id=""
+                                                    class="form-control" placeholder="" aria-describedby="helpId" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3">
+                                    <button type="button" id="btnAddReference" class="btn btn-outline-primary col-2">Add
+                                        More</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="p-3">
-                            <button type="button" id="addBtnLanguage" class="btn btn-outline-primary col-2">Add</button>
+                        <div class="p-4">
+                            <button type="submitssss" class="btn btn-outline-primary mt-3 mb-3 p-3 col-lg">Submit</button>
                         </div>
                     </div>
-
-                    {{-- Project Start --}}
-                    <strong>Projects(Optional)</strong>
-                    <div class="card p-2 mb-4 mt-4">
-                        <div class="card-body fetch_projects">
-                            <div class="project-section">
-                                    <div>
-                                        <label for="" class="form-label">Project Title</label>
-                                        <input type="text" name="project_title[]" id="" class="form-control"
-                                            placeholder="" aria-describedby="helpId" />
-                                    </div>
-
-                                <div class="mb-3">
-                                    <label for="" class="form-label">Description</label>
-                                    <textarea class="form-control" name="project_description[]" rows="3"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-3">
-                            <button type="button" id="btnAddProject" class="btn btn-outline-primary col-2">Add</button>
-                        </div>
-                    </div>
-
-
-                    {{-- Project End --}}
-                    {{-- Training --}}
-                    <strong>Training</strong>
-                    <div class="card p-2 mb-4 mt-4">
-                        <div class="card-body training_fetch">
-                            <div class="training-section">
-                                <div class="row p-2">
-                                    <div class="col-md-6">
-                                        <label for="" class="form-label">Title</label>
-                                        <input type="text" name="training_title[]" id="" class="form-control"
-                                            placeholder="" aria-describedby="helpId" />
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label for="" class="form-label">Year</label>
-                                        <select class="form-select" name="training_reading[]" id="">
-                                            <option selected>Select one</option>
-                                            <option value="">New Delhi</option>
-                                            <option value="">Istanbul</option>
-                                            <option value="">Jakarta</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-2">
-                                    <label for="" class="form-label">Institute</label>
-                                    <input type="text" name="training_institute[]" id="" class="form-control"
-                                        placeholder="" aria-describedby="helpId" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-3">
-                            <button type="button" id="btnAddTraining" class="btn btn-outline-primary col-2">Add</button>
-                        </div>
-                    </div>
-
-                    {{-- Award Certificate --}}
-                    <strong>Awards/Certificate</strong>
-                    <div class="card p-2 mb-4 mt-4">
-                        <div class="card-body fetch_awards">
-                            <div class="award-section">
-                                <div class="row p-2">
-                                    <div class="col-md-6">
-                                        <label for="" class="form-label">Title</label>
-                                        <input type="text" name="award_title[]" id="" class="form-control"
-                                            placeholder="" aria-describedby="helpId" />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="" class="form-label">Associated/Institute</label>
-                                        <input type="text" name="award_institution[]" id=""
-                                            class="form-control" placeholder="" aria-describedby="helpId" />
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="" class="form-label">Description</label>
-                                    <textarea class="form-control award_description" name="award_description[]" id="description" rows="3"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-3">
-                            <button type="button" id="btnAddAward" class="btn btn-outline-primary col-2">Add</button>
-                        </div>
-                    </div>
-
-                    {{-- Social Links --}}
-                    <strong>Social Network</strong>
-                    <div class="card p-2 mt-4 mb-4">
-                        <div class="card-body fetch_social">
-                            <div class="social-section">
-                                <div class="row p-2 ">
-                                    <div class="col-md-6">
-                                        <label for="" class="form-label">Social Media Name</label>
-                                        <input type="text" name="social_name[]" id="" class="form-control"
-                                            placeholder="" aria-describedby="helpId" />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="" class="form-label">Profile URL</label>
-                                        <input type="url" name="social_url[]" id="" class="form-control"
-                                            placeholder="" aria-describedby="helpId" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-3">
-                            <button type="button" id="btnAddSocialUrl"
-                                class="btn btn-outline-primary col-2">Add</button>
-                        </div>
-                    </div>
-
-                    {{-- References --}}
-
-                    <strong>References</strong>
-                    <div class="card p-2 mt-4 mb-4">
-                        <div class="card-body fetch_reference">
-                            <div class="reference-content">
-                                <div class="row p-2">
-                                    <div class="col-md-6">
-                                        <label for="" class="form-label">Reference Person</label>
-                                        <input type="text" name="ref_name[]" id="" class="form-control"
-                                            placeholder="" aria-describedby="helpId" />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="" class="form-label">Position</label>
-                                        <input type="url" name="ref_position[]" id="" class="form-control"
-                                            placeholder="" aria-describedby="helpId" />
-                                    </div>
-                                </div>
-                                <div class="row p-2">
-                                    <div class="col-md-6">
-                                        <label for="" class="form-label">Email</label>
-                                        <input type="text" name="ref_email[]" id="" class="form-control"
-                                            placeholder="" aria-describedby="helpId" />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="" class="form-label">Company Name</label>
-                                        <input type="url" name="company_name[]" id="" class="form-control"
-                                            placeholder="" aria-describedby="helpId" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-3">
-                            <button type="button" id="btnAddReference"
-                                class="btn btn-outline-primary col-2">Add</button>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
-        </form>
-        </div>
     </div>
 
     <script>
@@ -279,7 +296,7 @@
             // For Language End
 
             // Form Projects Start
-            $("#btnAddProject").click(function(){
+            $("#btnAddProject").click(function() {
                 $(".fetch_projects").append(`
                 <div class="project-section border border-primary rounded mt-2 mb-2 p-2">
                                     <div>
@@ -299,7 +316,7 @@
                 `);
             })
 
-            $(document).on("click",".btnRemoveProject",function(){
+            $(document).on("click", ".btnRemoveProject", function() {
                 $(this).closest('.project-section').remove();
             })
             // Form Projects End

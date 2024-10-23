@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\AdditionalController;
 use App\Http\Controllers\PersonalDetailController;
 use App\Http\Controllers\SuperAdmin\AdminUserController;
 use App\Http\Controllers\SuperAdmin\IndustryController;
@@ -149,5 +150,14 @@ Route::middleware('userAuth')->group(function(){
         Route::get('experience/detail/{id}',[ExperienceController::class,'experienceDetail']);
         Route::post('experience/update/{id}',[ExperienceController::class,'updateExperience']);
         Route::get('experience/delete/{id}',[ExperienceController::class,'destoryExperience']);
+
+
+        // Additional Detail
+        Route::get('additional-detail',[AdditionalController::class,'index'])->name('user.additionalDetail');
+        Route::post('additional-detail',[AdditionalController::class,'store'])->name('user.additionalDetail.store');
+        Route::get('additional-detail/get/{id}',[AdditionalController::class,'getAdditionalDetail']);
+        Route::get('additional-detail/detail/{id}',[AdditionalController::class,'additionalDetail']);
+        Route::post('additional-detail/update/{id}',[AdditionalController::class,'updateAdditionalDetail']);
+        Route::get('additional-detail/delete/{id}',[AdditionalController::class,'destoryAdditionalDetail']);
     });
 });
