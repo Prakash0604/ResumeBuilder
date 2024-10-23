@@ -95,4 +95,16 @@ class ExperienceController extends Controller
         }
 
     }
+
+    public function destoryExperience($id){
+        DB::beginTransaction();
+        try{
+            $this->model->deleteData($id);
+            DB::commit();
+            return response()->json(['success'=>true]);
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['success'=>false,'message'=>$e->getMessage()]);
+        }
+    }
 }

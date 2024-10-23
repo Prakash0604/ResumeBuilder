@@ -270,23 +270,28 @@
                         <div class="row">
                             <tr>
                                 <th>Position</th>
-                                <td><input type="text" id="position" class="form-control position" readonly ></td>
+                                <td><input type="text" id="position" class="form-control position" readonly></td>
 
                                 <th>Organization Name</th>
-                                <td><input type="text" id="organization_name" class="form-control organization_name" readonly></td>
+                                <td><input type="text" id="organization_name" class="form-control organization_name"
+                                        readonly></td>
                             </tr>
                             <tr>
                                 <th>Industry</th>
-                                <td><input type="text" id="industry_id" class="form-control industry_id" readonly></td>
+                                <td><input type="text" id="industry_id" class="form-control industry_id" readonly>
+                                </td>
 
                                 <th>Job Level</th>
-                                <td><input type="text" id="job_level_id" class="form-control job_level_id" readonly></td>
+                                <td><input type="text" id="job_level_id" class="form-control job_level_id" readonly>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Starting Date:</th>
-                                <td><input type="date" id="starting_date" class="form-control starting_date" readonly></td>
+                                <td><input type="date" id="starting_date" class="form-control starting_date" readonly>
+                                </td>
                                 <th>Ending Date:</th>
-                                <td><input type="date" id="ending_date" class="form-control ending_date" readonly></td>
+                                <td><input type="date" id="ending_date" class="form-control ending_date" readonly>
+                                </td>
                             </tr>
                         </div>
                     </table>
@@ -315,6 +320,32 @@
         </div>
     </div>
     {{-- Detail Modal --}}
+
+    {{-- Delete Modal --}}
+    <div class="modal" id="deleteModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered " role="document">
+            <div class="modal-content">
+                <form id="deleteExperiences">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitleId">
+                            Delete Experience
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="text-danger">Are you sure you want to delete ?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btnDelete" class="btn btn-danger">Confirm Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- Delete Modal --}}
     <script>
         CKEDITOR.replace('roles_response');
         $(document).ready(function() {
@@ -417,29 +448,69 @@
                 });
             });
 
-            $(document).on("click",".viewDetailButton",function(){
-                let id=$(this).attr("data-id");
+            $(document).on("click", ".viewDetailButton", function() {
+                let id = $(this).attr("data-id");
                 $.ajax({
-                    method:"get",
-                    url:"/user/experience/detail/"+id,
-                    success:function(response){
+                    method: "get",
+                    url: "/user/experience/detail/" + id,
+                    success: function(response) {
                         console.log(response);
                         $(".position").val(response.message[0].position);
                         $(".organization_name").val(response.message[0].organization_name);
                         $(".job_level_id").val(response.message[0].job_level.job_level_name);
                         $(".industry_id").val(response.message[0].industry.industry_name);
-                        $(".roles_responsibility").val(response.message[0].roles_responsibility);
+                        $(".roles_responsibility").val(response.message[0]
+                        .roles_responsibility);
                         $(".starting_date").val(response.message[0].starting_date);
                         $(".ending_date").val(response.message[0].ending_date);
                         if (response.message.status != null) {
                             $("#status").val(response.message[0].ending_date);
                         }
-                        $("#created_by").text(response.message[0].created_by.first_name + " " + response.message[0].created_by.middle_name +" "+ response.message[0].created_by.last_name);
+                        $("#created_by").text(response.message[0].created_by.first_name + " " +
+                            response.message[0].created_by.middle_name + " " + response
+                            .message[0].created_by.last_name);
                         $("#created_at").text(response.message[0].created_at);
                         $("#updated_at").text(response.message[0].updated_at);
-                        $("#updated_by").text(response.message[0].created_by.first_name + " " + response.message[0].created_by.middle_name +" "+ response.message[0].created_by.last_name);
+                        $("#updated_by").text(response.message[0].created_by.first_name + " " +
+                            response.message[0].created_by.middle_name + " " + response
+                            .message[0].created_by.last_name);
 
                     }
+                })
+            });
+
+            // Delete Modal
+
+            $(document).on("click",".deleteButton",function(){
+                let id=$(this).attr("data-id");
+                // console.log(id);
+                $("#deleteExperiences").submit(function(event){
+                    event.preventDefault();
+                    $("#btnDelete").text("Deleting...");
+                    $("#btnDelete").prop("disabled",true);
+                    $.ajax({
+                        method:"get",
+                        url:"/user/experience/delete/"+id,
+                        success:function(response){
+                            Swal.fire({
+                                icon:"success",
+                                title:"Success",
+                                text:"Experience Deleted Successfully",
+                                showConfirmButton:false,
+                                timer:1500
+                            });
+                            $("#btnDelete").text("Confirm Delete");
+                            $("#btnDelete").prop("disabled",false);
+                            $("#deleteModal").modal("hide");
+                            table.draw();
+
+                        },
+                        error:function(xhr){
+                            console.log(xhr);
+                            $("#btnDelete").text("Confirm Delete");
+                            $("#btnDelete").prop("disabled",false);
+                        }
+                    })
                 })
             })
         });
